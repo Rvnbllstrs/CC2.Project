@@ -1,0 +1,81 @@
+package character;
+import item.Summon;
+
+
+/**
+ * Knight extends from the abstract class Character.Java and overrides
+ * wound and summon pet and has its own value for the armor variable. This Class
+ * also implements Summon.Java an interface class and overrides petability
+ * method.
+ */
+public class Knight extends Character implements Summon {
+
+    private int durability;
+    public int petSkill;
+
+    /**
+     * The constructor method takes 3 parameters: n,d and i and assigns them
+     * to instance variables name dexterity and intelligence. Then the super class
+     * which is the Character is then called and is initialized using the parameters
+     * and some of default values Strength = 25, Armor 5. Lastly variable durability is set to
+     * a default value which is 10;
+     * 
+     */
+    public Knight(String n, int d, int i) {
+        super(n, 25, d, i, 5);
+        this.durability = 20;
+    }
+    
+    /**
+     * This method is the knight special skill which when called it negates the full damage of the enemy
+     * it has a return value of an integer which checks if he still has durability left to be able to use it.
+     * The durability is then reduced to 10 and when the knight is out of durability it returns 0 meaning that
+     * his skill failed.
+     */
+    public int block() {
+        if (this.durability == 0) {
+            return 0;
+        }
+        durability -= 10;
+        return 1;
+    }
+    /**
+     * Overridden method from the abstract class Character because the knight has an armor
+     * but still decreases currentlife by the damage parameter
+     */
+    @Override
+    public void wound(int damage) {
+        int x = (this.currentlife + this.armor) - damage;
+        if (x > 0) {
+            this.currentlife = x;
+        } else if (x <= 0) {
+            this.currentlife = 0;
+        }
+    }
+
+    /**
+     * Overridden method from the abstract class Character.Java that returns an integer value of a random number from the
+     * class dice.
+     */
+    @Override
+    public int summonpet() {
+        return dice.roll();
+    }
+    /**
+     * Overridden method from the interface class Summon.Java that first calls the summonpet method to check if the dice rolled
+     * into the needed value. If it rolled successfully the knight summons his pet and prints successful, sets the variable petSkill which is used in the Battle.Java
+     * as a checker, if not it prints a failure.
+     */
+    @Override
+    public void petability() {
+        int x = summonpet();
+        if (x == 6) {
+            //summon successful and knight wins!;
+            System.out.println(super.getName() + " summons a Dire Wolf! Knight automatically wins.");
+            this.petSkill = 1;
+        } else {
+            System.out.println(super.getName() + " fails to summon pet!");
+        }
+    }
+
+}
