@@ -1,0 +1,99 @@
+package character;
+import item.Dice;
+
+
+public abstract class Character {
+
+    static Dice dice = new Dice();
+
+    protected String name;
+    protected int strength;
+    protected int dexterity;
+    protected int intelligence;
+    protected int maxlife;
+    protected int currentlife;
+    public int armor;
+
+   
+    public Character(String n, int s, int d, int i) {
+        this.name = n;
+        this.strength = s;
+        this.dexterity = d;
+        this.intelligence = i;
+        this.maxlife = s * 5;
+        this.currentlife = this.maxlife;
+    }
+    
+
+    public Character(String n, int s, int d, int i, int a) {
+        this.name = n;
+        this.strength = s;
+        this.dexterity = d;
+        this.intelligence = i;
+        this.maxlife = s * 5;
+        this.armor = a;
+        this.currentlife = this.maxlife;
+    }
+
+    
+    public int attack() {
+        int x = this.dice.roll() + this.dexterity;
+        return x;
+    }
+
+    
+    public void wound(int damage) {
+        int x = this.currentlife - damage;
+        if (x > 0) {
+            this.currentlife = x;
+        } else if (x <= 0) {
+            this.currentlife = 0;
+        }
+    }
+
+    
+    public int heal(int heal) {
+        int x = this.intelligence + heal;
+        this.currentlife += x;
+        if (currentlife < maxlife) {
+            return x;
+        } else if (currentlife > maxlife) {
+            this.currentlife = this.maxlife;
+            return x;
+        } else {
+            this.currentlife = this.maxlife;
+            return 0;
+        }
+    }
+
+    
+    public String getName() {
+        return this.name;
+    }
+
+    public int getStrength() {
+        return this.strength;
+    }
+
+    
+    public int getDexterity() {
+        return this.dexterity;
+    }
+
+    
+    public int getIntelligence() {
+        return this.intelligence;
+    }
+
+    
+    public int getCurrentLife() {
+        return this.currentlife;
+    }
+
+    
+    public int getMaxLife() {
+        return this.maxlife;
+    }
+    
+    public abstract int summonpet();
+}
