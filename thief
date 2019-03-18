@@ -2,34 +2,18 @@ package character;
 
 import item.Summon;
 
-/**
- * Thief extends from the abstract class Character.Java and overrides wound
- * and summon pet and has its own value for the armor variable. This Class also
- * implements Summon.Java an interface class and overrides petability method.
- */
+
 public class Thief extends Character implements Summon {
 
     private int stamina;
 
-    /**
-     * The constructor method takes 3 parameters: n,s and i and assigns them to
-     * instance variables name, strength and intelligence. Then the super class
-     * which is the Character is then called and is initialized using the
-     * parameters and some of default values Dexterity = 25, Armor = 3. Lastly
-     * variable stamina is set to a default value which is 20;
-     *
-     */
+    
     public Thief(String n, int s, int i) {
         super(n, s, 25, i, 3);
         stamina = 20;
     }
 
-    /**
-     * This method is the Thief special skill which when called it reduces
-     * damage from the enemy using his dexterity plus a random value from the
-     * class dice then reduces his stamina. The stamina is then reduced to 6 and
-     * when the thief is out of stamina it returns 0 evasion.
-     */
+    
     public int evade() {
         int x = this.dexterity - super.dice.roll();
         int evade = 0;
@@ -42,11 +26,7 @@ public class Thief extends Character implements Summon {
         return evade;
     }
 
-    /**
-     * Overridden method from the abstract class Character because the mage has
-     * an armor but still decreases currentlife by the damage parameter
-     */
-    @Override
+    
     public void wound(int damage) {
         int x = (this.currentlife + this.armor) - damage;
         if (x > 0) {
@@ -56,22 +36,11 @@ public class Thief extends Character implements Summon {
         }
     }
 
-    /**
-     * Overridden method from the abstract class Character.Java that returns an
-     * integer value of a random number from the class dice.
-     */
-    @Override
+   
     public int summonpet() {
         return dice.roll() + 1;
     }
 
-    /**
-     * Overridden method from the interface class Thief.Java that first calls
-     * the summonpet method to check if the dice rolled into the needed value.
-     * If it rolled successfully the thief summons his pet and prints a message
-     * then adds a 5 to his dexterity , if not it prints a failure.
-     */
-    @Override
     public void petability() {
         int x = summonpet();
         if (x % 2 == 1) {
