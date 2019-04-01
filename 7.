@@ -1,26 +1,182 @@
-package unknown;
-public class Unknown {
+package pacmann;
+import java.awt.*;
+import javax.swing.JFrame;
+import java.awt.event.*;
+import javax.swing.JOptionPane;
+public class Pacmann extends Panel implements KeyListener {
+    static Dice dice = new Dice();
+    static int y = 200, x = 200, sa = 23, mouth = 315, foodx = 250, foody = 200,score = 0,counter = 0;
+    static String name = "";
+    static Color color = Color.yellow, food = Color.RED, won = Color.BLACK;
+    static Graphics a;
+    public Pacmann(){
+        this.setBackground(new Color(0,0,0));
+        this.addKeyListener(this);
+    }
+    @Override
+    public void paint(Graphics a){
+        a.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        a.setColor(won);
+        a.drawString("HORRAY YOU WON GAME OVER!", 100, 100);
+        a.setColor(food);
+        a.fillOval(foodx, foody, 20, 20);
+        a.setColor(color);
+        a.fillArc(x, y, 100, 100, sa, mouth);
+        a.setColor(Color.CYAN);
+        a.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        a.drawString("Score:", 450, 20);
+        a.drawString(String.valueOf(score), 450, 40);
+        a.drawString(name, 20, 20);
+    }
     public static void main(String[] args) {
-       
-    int a[] = {3, 5, 7, 13, 2, 3, 9, 10} ;
-    int b[] = {1, 2, 3, 4, 5} ;
-    display (a);
+        name = JOptionPane.showInputDialog("Enter Your Name");
+        JFrame frame = new JFrame();
+        frame.setTitle("PAKUMAN");
+        Pacmann panel = new Pacmann();
+        frame.add(panel);
+        frame.setSize(500, 500);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
-    static void display (int a[]){
-    for (int i = 0; i < a.length; i++) {
-    System.out.println("f(" + a[i] + ") = " + fibonacci(a[i]));
-            
-        }
-    }
-     
-    static int fibonacci (int n) {
-     if (n <= 1) {
-     return n;
-    }
-    else {
-    return fibonacci (n-1) + fibonacci (n-2);
-   }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
         
     }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyChar() == 'r'){
+            color = Color.red;
+        }else if(e.getKeyChar() == 'y'){
+            color = Color.yellow;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_UP){
+            
+              if((x+50) == (foodx+10) && (y+50) == (foody+10)){
+                score += 1;
+                counter += 1;
+                food = Color.BLACK;
+                if(food == Color.BLACK){
+                      food = Color.BLUE;
+                    foodx = dice.roll()*20;
+                    foody = dice.roll()*20;
+                }
+                if(counter == 10){
+                   won = Color.WHITE;
+                   food = Color.BLACK;
+                   foodx = 0;
+                   foody = 0;
+                }
+                }
+            if(y <= 0){
+                y = getHeight();
+            }else{
+                y -= 0;
+            }
+            y -= 5;
+            sa = 113;
+            if(y % 2 == 0){
+                mouth = 315;
+            }else{
+                mouth = 360;
+            }
+        }
+        if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                        if((x+50) == (foodx+10) && (y+50) == (foody+10)){
+                score += 1;
+                counter += 1;
+                food = Color.BLACK;
+                if(food == Color.BLACK){
+                  food = Color.RED;
+                    foodx = dice.roll()*20;
+                    foody = dice.roll()*20;
+                }
+                if(counter == 10){
+                   won = Color.WHITE;
+                   food = Color.RED;
+                   foodx = 0;
+                   foody = 0;
+                }
+            }
+            if(y >= getHeight() - 100){
+                y = -100;
+            }else{
+                y += 5;
+            }
+            sa = 293; 
+            if(y % 2 == 0){
+                mouth = 315;
+            }else{
+                mouth = 360;
+            }
+        }
+        if(e.getKeyCode() == KeyEvent.VK_LEFT){
+            if((x+50) == (foodx+10) && (y+50) == (foody+10)){
+                 
+                score += 1;
+                counter += 1;
+                food = Color.BLACK;
+                if(food == Color.BLACK){
+                    food = Color.GRAY;
+                    foodx = dice.roll()*50;
+                     foody = dice.roll()*50;
+                }
+                if(counter == 10){
+                   won = Color.WHITE;
+                   food = Color.BLACK;
+                   foodx = 0;
+                   foody = 0;
+                }
+                }
+            if(x <= 0){
+                x = getWidth();
+            }else{
+                x -= 0;  
+            }
+            x -= 5;
+            sa = 203;
+            if(x % 2 == 0){
+                mouth = 315;
+            }else{
+                mouth = 360;
+            }
+        }
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                 if((x+50) == (foodx+10) && (y+50) == (foody+10)){
+                score += 1;
+                counter += 1;
+                food = Color.BLACK;
+                if(food == Color.BLACK){
+                    food = Color.PINK;
+                    foodx = dice.roll()*20;
+                    foody = dice.roll()*20;
+                }
+                if(counter == 10){
+                   won = Color.WHITE;
+                   food = Color.BLACK;
+                   foodx = 0;
+                   foody = 0;
+                }
+                }
+            if(x >= getWidth()){
+                x = -100;
+            }else{
+                x += 5;
+            }
+            sa = 23;
+            if(x % 2 == 0){
+                mouth = 315;
+            }else{
+                mouth = 360;
+            }
+        }
+            repaint();
+        }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        
+    }
+    
 }
