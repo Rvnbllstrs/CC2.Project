@@ -1,0 +1,120 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
+public class StacksQueues {
+	public static BufferedReader br;
+
+	public static void main(String[] args) throws IOException {
+		br = new BufferedReader(new InputStreamReader(System.in));
+
+		System.out.println("Welcome to Stacks and Queue's");
+		System.out.println("Which do you want to try first?\n" + "1. Stacks\n" + "2. Queue's");
+		int choose = Integer.parseInt(br.readLine());
+		if (choose == 1) {
+			Stacks();
+		} else if (choose == 2) {
+			Queue();
+		}
+	}
+
+	public static void Stacks() throws IOException {
+		Stack<String> Enter = new Stack<>();
+
+		boolean yeno;
+		while (yeno = true) {
+			System.out.println("You chose Stack");
+			System.out.println("What do you want to do?\n" + "1. Push\n" + "2. Pop\n" + "3. Search");
+			int choice = Integer.parseInt(br.readLine());
+
+			if (choice == 1) {
+				System.out.println("Enter element:");
+				String push = br.readLine();
+				Enter.push(push);
+			} else if (choice == 2) {
+				if (Enter.isEmpty()) {
+					System.out.println("There are no elements to pop");
+				} else {
+					String pop1 = Enter.pop();
+					System.out.println("Element that was removed: " + pop1);
+				}
+			} else if (choice == 3) {
+				if (Enter.isEmpty()) {
+					System.out.println("There are no elements to Search");
+				} else {
+					System.out.println("What elements do you want to search in the stack?");
+					String search = br.readLine();
+					Enter.search(search);
+					if (!Enter.contains(search)) {
+						System.out.println("That element is not found in the Stack");
+					} else {
+						int position = Enter.search(search);
+						if (position != -1) {
+							System.out.println("Found the element " + search + " at position : " + position);
+						} else {
+							System.out.println("Element not found");
+						}
+					}
+				}
+			}
+			if (Enter.isEmpty()) {
+				System.out.println("\nThere are no elements in the stack");
+			} else {
+				Enter.peek();
+				System.out.println("Current Stack: " + Enter);
+				System.out.println("Size of Stack: " + Enter.size());
+			}
+
+			System.out.println("\nDo you wish to continue?: Y/N");
+			String yeno1 = br.readLine();
+			if (yeno1.equalsIgnoreCase("no") || yeno1.equalsIgnoreCase("n")) {
+				break;
+			} else {
+				yeno = false;
+			}
+		}
+
+	}
+
+	public static void Queue() throws IOException {
+		Queue<String> queue = new LinkedList<>();
+
+		boolean yeno;
+		while (yeno = true) {
+			System.out.println("You chose Queue");
+			System.out.println("What do you want to do?\n" + "1. Add\n" + "2. Remove\n");
+			int choice = Integer.parseInt(br.readLine());
+
+			if (choice == 1) {
+				System.out.println("Enter variable:");
+				String add = br.readLine();
+				queue.add(add);
+			} else if (choice == 2) {
+				if (queue.isEmpty()) {
+					System.out.println("There are no Variables in the Queue");
+				} else {
+					String rem = queue.remove();
+					System.out.println("Variable that was removed: " + rem);
+				}
+			}
+			if (queue.isEmpty()) {
+				System.out.println("There are no elements in the queue");
+			} else {
+				queue.peek();
+				System.out.println("Queue: " + queue);
+				System.out.println("The head of Queue: " + queue.element());
+				System.out.println("Queue size: " + queue.size());
+			}
+			System.out.println("\nDo you wish to continue?: Y/N");
+			String yeno1 = br.readLine();
+			if (yeno1.equalsIgnoreCase("no") || yeno1.equalsIgnoreCase("n")) {
+				break;
+			} else {
+				yeno = false;
+			}
+		}
+	}
+}
