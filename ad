@@ -1,0 +1,65 @@
+import java.util.Scanner;
+
+public class ArrayAddressCalculation {
+	static Scanner s = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		// information about the records
+		System.out.print("Enter the number of records: ");
+		int r = s.nextInt();
+		System.out.print("Enter number of fields in the records: ");
+		int d = s.nextInt();
+		int orig[] = new int[d];
+		String fields[] = new String[d];
+		System.out.println("Enter the names of the fields: ");
+		for (int i = 0; i < d; i++) {
+			System.out.print("Field " + (i + 1) + ": ");
+			fields[i] = s.next();
+			System.out.print("Enter the esize of " + fields[i] + ": ");
+			orig[i] = s.nextInt();
+		}
+		// finding the address of the field in a record
+		System.out.println("Finding the address of the field in a record:");
+		System.out.print("Enter the base/starting address: ");
+		int a = s.nextInt();
+		System.out.print("Record number: ");
+		int fr = s.nextInt();
+		fr -= 1;
+		System.out.print("Field name: ");
+		String fn = s.next();
+		int fd = -1;
+		boolean elementness = true;
+		if (fr > r || fr < 0) {
+			System.out.println("Record not found");
+			elementness = false;
+		}
+		for (int i = 0; i < d; i++) {
+			if (fn.equalsIgnoreCase(fields[i])) {
+				fd = i;
+				break;
+			}
+		}
+		if (fd > d || fd < 0) {
+			System.out.println("Field not found");
+			elementness = false;
+		}
+		int esizes = orig[0];
+		for (int i = 1; i < d; i++) {
+			esizes += orig[i];
+		}
+		fr *= esizes;
+		int ffd;
+		if (elementness == true) {
+			ffd = fd;
+			for (int i = 0; i < ffd; i++) {
+				fr += orig[i];
+			}
+		}
+		fr += a;
+		if (elementness == true) {
+			System.out.println("Address found: " + fr);
+		} else {
+			System.out.println("Address not found");
+		}
+	}
+}
